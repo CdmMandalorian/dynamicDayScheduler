@@ -4,6 +4,22 @@ body {
   line-height: 1;
 }
 
+.column {
+  float: left;
+}
+
+h4 {
+  text-align: center;
+}
+
+.hour, .saveBtn {
+  width: 25%;
+}
+
+.text-area {
+  width: 50%;
+}
+
 textarea{
   background: transparent;
   border: none;
@@ -39,7 +55,7 @@ textarea{
 .hour {
   background-color: #ffffff;
   color: #000000;
-  border-top: 1px dashed #000000;
+  border-top: 1px solid #000000;
 }
 
 .past {
