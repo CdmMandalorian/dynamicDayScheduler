@@ -21,10 +21,10 @@
 * ---Grey = Hours that have past
 
 ## Screenshot of output HTML:  
-![image] (/assets/img/dynamic-day-scheduler-sc.png)
+![image](/assets/img/dynamic-day-scheduler-sc.png)
 
 
-![image] (/assets/img/dynamic-day-scheduler-sc(1).png)
+![image](/assets/img/dynamic-day-scheduler-sc(1).png)
 
 
 ## Repository:  
