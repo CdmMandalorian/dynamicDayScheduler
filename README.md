@@ -19,3 +19,22 @@
 * ---Green = Current hour
 * ---Red = Hours to come
 * ---Grey = Hours that have past
+
+## Screenshot of output HTML:  
+![image] (/assets/img/dynamic-day-scheduler-sc.png)
+
+
+![image] (/assets/img/dynamic-day-scheduler-sc(1).png)
+
+
+## Repository:  
+[Dynamic Day Scheduler](https://github.com/CdmMandalorian/dynamicDayScheduler.github.io)  
+
+## LIVE LINK:
+(https://cdmmandalorian.github.io/dynamicDayScheduler.github.io/)
+
+  
+## Portfolio:  
+[Armando Galindo Portfolio](https://cdmmandalorian.github.io/MResponsive-Portfolio/)
+  
+## Credits: 
