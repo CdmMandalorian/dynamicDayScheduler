@@ -38,3 +38,10 @@
 [Armando Galindo Portfolio](https://cdmmandalorian.github.io/MResponsive-Portfolio/)
   
 ## Credits: 
+HTML 5     
+CSS     
+BootStrap    
+Google Fonts API    
+Font Awesome API    
+Javascript    
+JQuery     
