@@ -1,156 +1,138 @@
-var timeKeeper = [
-    {
-        id: "0",
-        hour: "07",
-        time: "07",
-        ampm: "am",
-        textArea: ""
-    },
-    {
-        id: "1",
-        hour: "08",
-        time: "08",
-        ampm: "am",
-        textArea: ""
-    },
-    {
-        id: "2",
-        hour: "09",
-        time: "09",
-        ampm: "am",
-        textArea: ""
-    },
-    {
-        id: "3",
-        hour: "10",
-        time: "10",
-        ampm: "am",
-        textArea: ""
-    },
-    {
-        id: "4",
-        hour: "11",
-        time: "11",
-        ampm: "am",
-        textArea: ""
-    },
-    {
-        id: "5",
-        hour: "12",
-        time: "12",
-        ampm: "pm",
-        textArea: ""
-    },
-    {
-        id: "6",
-        hour: "01",
-        time: "13",
-        ampm: "pm",
-        textArea: ""
-    },
-    {
-        id: "7",
-        hour: "02",
-        time: "14",
-        ampm: "pm",
-        textArea: ""
-    },
-    {
-        id: "8",
-        hour: "03",
-        time: "15",
-        ampm: "pm",
-        textArea: ""
-    },
-    {
-        id: "9",
-        hour: "04",
-        time: "16",
-        ampm: "pm",
-        textArea: ""
-    },{
-        id: "10",
-        hour: "05",
-        time: "17",
-        ampm: "pm",
-        textArea: ""
-    },
-    {
-        id: "11",
-        hour: "06",
-        time: "18",
-        ampm: "pm",
-        textArea: ""
-    },
-    {
-        id: "12",
-        hour: "07",
-        time: "19",
-        ampm: "pm",
-        textArea: ""
-    },
+// global variables //
+var scheduledHours = [];
+var availableHours = {};
+var m = moment();
+var newDay = moment().hour(0);
+var currentTime = m.hour();
 
-];
+// adds clock to currentDay // 
+function clock() {
+  var dateString = moment().format('MMMM Do YYYY, h:mm:ss a');
+  $('#currentDay').html(dateString);
+}
+// allows clock to tick in real time on header // 
+setInterval(clock, 1000);
 
-function init(){
-    var jumbotronDateText = moment().format('dddd, MMMM Do');
-    $('#currentDay').text(jumbotronDateText);
-
-    var storedObj = JSON.parse(localStorage.getItem("timeKeeper"));
-    if (storedObj) {timeKeeper = storedObj;};
-    storeTextArea();
-    displaySavedText();
+//generates text on BS columns //
+for (var hour = 9; hour < 22; hour++) {
+  scheduledHours.push(moment({hour}).format('h  a'));
+  $('.container').append(`<div class='row time-block' data-time='${hour}'>
+       <!--hour column-->
+           <div class='col-sm col-md-2 hour'>
+             <p>${moment({hour}).format('h  a')}</p>
+           </div>
+        <!--scheduling column-->
+           <div class='col-sm col-md-10 d-flex description'>
+              <div class='input-group'>
+                <textarea class="form-control text-area"></textarea>
+                <div class='input-group-append'>
+                  <button class='save-button d-flex justify-center align-center'>
+                    <i class='far fa-save fa-2x save-icon'></i>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>`);
+// End BS columns generation // 
 }
 
-function storeTextArea(){
-    localStorage.setItem("timeKeeper", JSON.stringify(timeKeeper));
+
+// Checks time for present, past, or future //
+$.each($('.time-block'), function(index, value) {
+  let dateHour = $(value).attr('data-time');
+  if (Number(dateHour) === m.hour()) {
+    $(this).find('textarea').addClass('present');
+  } else if (Number(dateHour) < m.hour()) {
+    $(this).find('textarea').addClass('past').attr('disabled', 'disabled');
+    $(this).find('.save-button').addClass('disabled').attr('disabled', true);
+  } else {
+    $(this).find('textarea').addClass('future');
+  }
+});
+// logs current time in console to determine accuracy with moment.js // 
+console.log(currentTime);
+
+if (currentTime >=0 && currentTime < 9){
+  localStorage.clear();
 }
 
-function displaySavedText(){
-    timeKeeper.forEach(function (element) {
-        $(`#${element.id}`).val(element.textArea);
-    })
+//Checks local storage and sets value to the object or clears if currentTime is between 12am and 9am // 
+if (localStorage.getItem('availableHours')) {
+  availableHours = JSON.parse(localStorage.getItem('availableHours'));
+} else {
+    // Time blocks 9am - 9pm // 
+  availableHours = {
+    '9': {
+      time: '9',
+      value: ''
+    },
+    '10': {
+      time: '10',
+      value: ''
+    },
+    '11': {
+      time: '11',
+      value: ''
+    },
+    '12': {
+      time: '12',
+      value: ''
+    },
+    '13': {
+      time: '13',
+      value: ''
+    },
+    '14': {
+      time: '14',
+      value: ''
+    },
+    '15': {
+      time: '15',
+      value: ''
+    },
+    '16': {
+      time: '16',
+      value: ''
+    },
+    '17': {
+      time: '17',
+      value: ''
+    },
+    '18': {
+      time: '18',
+      value: ''
+    },
+    '19': {
+      time: '19',
+      value: ''
+    },
+    '20': {
+      time: '20',
+      value: ''
+    },
+    '21': {
+      time: '21',
+      value: ''
+    },
+  };
 }
 
-timeKeeper.forEach(function(element) {
-   
-    var newRow = $('<form>').attr({ "class": "row" });
-    $('.container').append(newRow);
-
-    var displayHourField = $('<div>')
-        .text(`${element.hour}${element.ampm}`)
-        .attr({ "class": "col-2 hour" });
-    
-    var textDiv = $('<div>').attr({ "class": "col-9 description p-0" });
-    
-    var newTextArea = $('<textarea>').attr("id", element.id);
-    if(element.time < moment().format('HH')) {newTextArea.attr("class", "past");}
-    if(element.time > moment().format('HH')) {newTextArea.attr('class', 'present');} 
-    if(element.time === moment().format('HH')) {newTextArea.attr('class', 'future');}
-    
-    var saveIcon = $("<i class='far fa-save fa-lg'></i>");
-    var saveButton = $('<button>').attr('class', 'col-1 saveBtn');
-    
-    saveButton.append(saveIcon);
-    textDiv.append(newTextArea);
-    newRow.append(displayHourField, textDiv, saveButton);
+//set value of availableHours to equal the user input for each row
+$('.time-block').each(function() {
+  $(this).find('.text-area').val(availableHours[$(this).attr('data-time')].value);
 });
 
-$('.saveBtn').on('click', function(event) {
-    event.preventDefault();
-    var saveFutureIndex = $(this).siblings('.description').children('.future').attr("id");
-    var savePresentIndex = $(this).siblings('.description').children('.present').attr("id");
+// Saves to local storage with on click //
+$('.save-button').on('click', function(event){
+  event.preventDefault();
 
-    if (saveFutureIndex) {
-      timeKeeper[saveFutureIndex].textArea = $(this).siblings('.description').children('.future').val();  
-    }
+  //set availableHours time attribute
+  var timeValue = $(this).closest('.time-block').attr('data-time');
 
-    if (savePresentIndex) {
-        timeKeeper[savePresentIndex].textArea = $(this).siblings('.description').children('.present').val();
-    }
+  // set availableHours attributes // 
+    var textValue = $(this).closest('.time-block').find('.text-area').val();
+    availableHours[timeValue].value = textValue;
 
-    storeTextArea();
-    displaySavedText();
+  //save user input of each object to local storage // 
+    localStorage.setItem('availableHours', JSON.stringify(availableHours));
 });
-
-init();
