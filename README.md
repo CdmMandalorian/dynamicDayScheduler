@@ -35,7 +35,7 @@
 
   
 ## Portfolio:  
-[Armando Galindo Portfolio](https://cdmmandalorian.github.io/Armando-E-Galindo-Portfolio/)
+[Armando Galindo Portfolio](https://cdmmandalorian.github.io/AEGcodesPortfolio/)
   
 ## Credits: 
 HTML 5     
