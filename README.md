@@ -31,7 +31,7 @@
 [Dynamic Day Scheduler](https://github.com/CdmMandalorian/dynamicDayScheduler.github.io)  
 
 ## LIVE LINK:
-(https://cdmmandalorian.github.io/dynamicDayScheduler.github.io/)
+(https://cdmmandalorian.github.io/dynamicDayScheduler/)
 
   
 ## Portfolio:  
